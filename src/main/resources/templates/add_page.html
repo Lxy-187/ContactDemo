@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>TodoList</title>
+    <!-- 新 Bootstrap4 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <!-- bootstrap.bundle.min.js 用于弹窗、提示、下拉菜单，包含了 popper.min.js -->
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="./list_page.html" th:href="@{./}">Home</a></li>
+        <li class="breadcrumb-item active">Add</li>
+    </ol>
+    <form action="./add" method="post" th:action="@{./add}" enctype="multipart/form-data" onsubmit="return validateEmail();">
+        <div class="form-group">
+            <label for="name">姓名:</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="formFile" class="form-label">请选择头像</label>
+            <input class="form-control" type="file" id="formFile" name="avatar">
+        </div>
+        <div class="form-group">
+            <label for="email">邮箱:</label>
+            <input type="text" class="form-control" id="email" name="email">
+        </div>
+        <div class="form-group">
+            <label for="phone">电话号码:</label>
+            <input type="text" class="form-control" id="phone" name="phone" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <script>
+            function validateEmail() {
+                // 获取输入框中的邮箱值
+                const emailInput = document.getElementById('email');
+                const emailValue = emailInput.value.trim();
+                const phoneInput = document.getElementById('phone');
+                const phoneValue = phoneInput.value.trim();
+                // 正则表达式，用于验证邮箱格式
+                const emailRegex = /^([\w-.]+)+@[\w-]+(\.[\w-]+)+$/;
+                const regMobile = /^1[0-9]{10}$/g;
+                // 进行验证
+                if (!emailRegex.test(emailValue)) {
+                    alert('请输入有效的邮箱地址');
+                    return false;
+                }
+                if (phoneValue === '') {
+                    alert('电话号码不能为空');
+                    return false;
+                } else if (!regMobile.test(phoneValue)) {
+                    alert('请输入有效的电话号码');
+                    return false;
+                }
+
+                // 验证通过
+                return true;
+            }
+        </script>
+    </form>
+</div>
+
+</body>
+</html>

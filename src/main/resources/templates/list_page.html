@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>通讯录</title>
+    <!-- 新 Bootstrap4 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <!-- bootstrap.bundle.min.js 用于弹窗、提示、下拉菜单，包含了 popper.min.js -->
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <h2>通讯录</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <!-- 搜索框 -->
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="输入用户名和电话号码搜索">
+                <button class="btn btn-outline-secondary" type="button" onclick="search()" th::href>Search</button>
+            </div>
+            <script>
+                function search() {
+                    const input = document.getElementsByClassName("form-control")[0].value;
+                    window.location.href = "./search?keyword=" + input;
+                }
+            </script>
+        </div>
+        <div class="col-md-6 text-right">
+            <!-- Add 按钮 -->
+            <a class="btn btn-primary" href="./add_page.html" th:href="@{./add}">Add</a>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>索引</th>
+            <th>头像</th>
+            <th>姓名</th>
+            <th>电话</th>
+            <th>邮箱</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody th:remove="all-but-first">
+        <tr th:each="contact:${contacts}" >
+            <td th:text="${contactStat.count}">1</td>
+            <td>
+                <img th:src =|images/${contact.avatarPath}| width="50" height="50"/>
+            </td>
+            <td th:text="${contact.name}">曾德桢</td>
+            <td th:text="${contact.phone}">123456789</td>
+            <td th:text="${contact.email}">default@bupt.edu.cn</td>
+            <td>
+                <a type="button" class="btn btn-xs btn-success" href="./edit_page.html?id=1" th:href="@{./edit(id=${contact.id})}">编辑</a>
+                <a type="button" class="btn  btn-xs btn-danger" href="./delete?id=1" th:href="@{./delete(id=${contact.id})}">删除</a>
+            </td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>下午2点教三130听报告</td>
+            <td>
+                <a type="button" class="btn  btn-xs btn-success" href="./edit_page.html?id=1">编辑</a>
+                <a type="button" class="btn  btn-xs btn-danger" href="./delete?id=1">删除</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
